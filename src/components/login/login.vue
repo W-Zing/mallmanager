@@ -37,7 +37,7 @@ export default {
             if (status === 200) {
                 // 登陆成功
                 // 1. 跳转home
-                // this.$router.push({name: 'home'})
+                this.$router.push({name: 'home'})
                 this.$message.success(msg);
                 
                 // 2. 提示成功
