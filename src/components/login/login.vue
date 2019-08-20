@@ -8,7 +8,7 @@
       <el-form-item label="密码">
         <el-input v-model="formdata.password"></el-input>
       </el-form-item>
-      <el-button @click.prevent = "handleLogin()" class="login-btn" type="primary">登陆</el-button>
+      <el-button @click.prevent="handleLogin()" class="login-btn" type="primary">登陆</el-button>
     </el-form>
   </div>
 </template>
@@ -25,25 +25,27 @@ export default {
   },
   methods: {
     async handleLogin() {
-        const res = await this.$http.post('login', this.formdata)
-            const {
-                data,
-                meta: { msg, status }
-            } = res.data
+      const res = await this.$http.post("login", this.formdata);
+      const {
+        data,
+        meta: { msg, status }
+      } = res.data;
 
-            // 不成功
-            // 1.提示消息
-            if (status === 200) {
-                // 登陆成功
-                // 1. 跳转home
-                this.$router.push({name: 'home'})
-                this.$message.success(msg);
-                
-                // 2. 提示成功
-            }else{
-              this.$message.error(msg);
-            }
-            
+      // 不成功
+      // 1.提示消息
+      if (status === 200) {
+        // 登陆成功
+        // 保存token
+        localStorage.setItem('token', data.token)
+
+        // 1. 跳转home
+        this.$router.push({ name: "home" });
+        this.$message.success(msg);
+
+        // 2. 提示成功
+      } else {
+        this.$message.error(msg);
+      }
     }
   }
 };
